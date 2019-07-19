@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:login_stateful/src/screens/login_scree.dart';
+import 'blocs/provider.dart';
 
 class App extends StatelessWidget {
   @override
