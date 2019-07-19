@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../blocs/bloc.dart';
 
 class LoginScreenBloc extends StatelessWidget {
   @override
@@ -9,40 +10,54 @@ class LoginScreenBloc extends StatelessWidget {
           children: <Widget>[
             emailField(),
             passwordField(),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
             submitButton(),
-
           ],
-        )
-    );
+        ));
   }
 
   Widget emailField() {
-    return TextField(
-      keyboardType: TextInputType.emailAddress,
-      decoration: InputDecoration(
-        labelText: 'Email Address',
-        hintText: 'you@email.com',
-      ),
+    return StreamBuilder(
+      stream: bloc.email,
+      builder: (_, snapshot) {
+        return TextField(
+          onChanged: bloc.changeEmail,
+          keyboardType: TextInputType.emailAddress,
+          decoration: InputDecoration(
+              labelText: 'Email Address',
+              hintText: 'you@email.com',
+              errorText: snapshot.error),
+        );
+      },
     );
   }
 
   Widget passwordField() {
-    return TextField(
-//      obscureText: true,
-      decoration: InputDecoration(
-          labelText: 'Password',
-          hintText: 'Password'
+    return StreamBuilder(
+      stream: bloc.password,
+      builder: (_, snapshot) {
+        return TextField(
+          obscureText: true,
+          onChanged: bloc.changePassword,
+          decoration: InputDecoration(
+              labelText: 'Password',
+              hintText: 'Password',
+              errorText: snapshot.error),
+        );
+      },
+    );
+  }
+
+  Widget submitButton() {
+    return RaisedButton(
+      color: Colors.blue,
+      onPressed: () {},
+      child: Text(
+        "Submit",
+        style: TextStyle(color: Colors.white),
       ),
     );
   }
-
-  Widget submitButton(){
-    return RaisedButton(
-      color: Colors.blue,
-      onPressed: (){},
-      child: Text("Submit", style: TextStyle(color: Colors.white),),
-    );
-  }
-
 }
